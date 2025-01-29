@@ -10,6 +10,11 @@ class Item(BaseModel):
     price: float
     brand: Optional[str] = None
 
+class UpdateItem(BaseModel):
+    name: str = None
+    price: float = None
+    brand: Optional[str] = None
+
 
 inventory = {
     1:{
@@ -37,4 +42,12 @@ def create_iten(item_id: int, item: Item):
         return {"Error": "Item ID already exists"}
 
     inventory[item_id] = item
+    return inventory[item_id]
+
+@app.put("/update-item/{item_id}")
+def update_item(item_id: int, item: Item):
+    if item_id not in inventory:
+        return {"error": "item ID already exists"}
+    
+    inventory[item_id].update(item)
     return inventory[item_id]
