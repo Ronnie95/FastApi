@@ -1,7 +1,14 @@
 from fastapi import FastAPI
-
+from typing import Optional
+from pydantic import BaseModel
 
 app = FastAPI()
+
+
+class Item(BaseModel):
+    name: str
+    price: float
+    brand: Optional[str] = None
 
 
 inventory = {
@@ -23,3 +30,7 @@ def about():
 @app.get("/get-item/{item_id}")
 def get_item(item_id: int):
     return inventory[item_id]
+
+@app.post("/create-item")
+def create_iten(item: Item):
+    return {}
