@@ -45,9 +45,16 @@ def create_iten(item_id: int, item: Item):
     return inventory[item_id]
 
 @app.put("/update-item/{item_id}")
-def update_item(item_id: int, item: Item):
+def update_item(item_id: int, item: UpdateItem):
     if item_id not in inventory:
         return {"error": "item ID already exists"}
     
     inventory[item_id].update(item)
     return inventory[item_id]
+
+@app.delete("/delete-item/{item_id}")
+def delete_item(item_id: int, item: Item):
+    if item_id not in inventory:
+        return {"Error": "Id not working"}
+    
+    del inventory[item_id]
